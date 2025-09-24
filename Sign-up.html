@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Roboto Condensed", sans-serif;
+        }
+
+        :root {
+            --lead: #212121;
+            --gold-finger: #F2BD12;
+            --eye-ball: #FFFDf7;
+            --hint-yellow: #FCF1CC;
+            --pure-white: #FFF;
+        }
+
+        body {
+            background: #f4f7fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            width: 450px;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        input {
+            margin: 10px 0;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        button {
+            background: var(--gold-finger);
+            color: var(--pure-white);
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        button:hover {
+            background: var(--lead)
+        }
+
+        p {
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        a {
+            color: gold;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: rgb(239, 213, 62);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Create an Account</h2>
+
+        <form>
+            <input type="text" placeholder="Full Name" required>
+            <input type="email" placeholder="Email Address" required>
+            <input type="password" placeholder="Password" required>
+            <button type="submit" id="sign-up-btn">Sign Up</button>
+        </form>
+
+        <p>or</p>
+
+        <!-- Google Sign-In Button -->
+        <div id="g_id_onload" data-client_id="910417933535-a07mhk9rbdpuclm1l4627361nrabbl4p.apps.googleusercontent.com"
+            data-context="signup" data-ux_mode="popup" data-auto_prompt="false">
+        </div>
+
+        <div class="g_id_signin" data-type="standard" data-shape="rectangular" data-theme="outline"
+            data-text="signup_with" data-size="large" data-logo_alignment="left">
+        </div>
+
+        <!-- Where user info will appear -->
+ 
+
+        <p>Already have an account? <a href="signin.html">Sign In</a></p>
+    </div>
+
+    <!-- Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+   <script>
+   function handleCredentialResponse(response) {
+    const data = jwt_decode(response.credential);
+    console.log("User Info:", data);
+
+    // Show alert instead of displaying in the page
+    alert(`Welcome ${data.name}!`);
+    
+    // Redirect after login (optional)
+    window.location.href = "index.html";
+}
+
+
+    document.getElementById("sign-up-btn").addEventListener("click", (event) => {
+        event.preventDefault(); // stop form from reloading page
+
+        const name = document.querySelector('input[type="text"]').value.trim();
+        const email = document.querySelector('input[type="email"]').value.trim();
+        const password = document.querySelector('input[type="password"]').value.trim();
+
+        if (name === "" || email === "" || password === "") {
+            alert("Please fill in all fields!");
+        } else {
+            alert("Created an Account!");
+            window.location.href = "index.html"; // redirect after success
+        }
+    });
+
+    window.onload = function () {
+        google.accounts.id.initialize({
+            client_id: "910417933535-a07mhk9rbdpuclm1l4627361nrabbl4p.apps.googleusercontent.com",
+            callback: handleCredentialResponse
+        });
+        google.accounts.id.renderButton(
+            document.querySelector(".g_id_signin"),
+            { theme: "outline", size: "large" }
+        );
+    };
+</script>
+
+</body>
+
+</html>
