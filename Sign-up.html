@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Roboto Condensed", sans-serif;
+        }
+
+        :root {
+            --lead: #212121;
+            --gold-finger: #F2BD12;
+            --eye-ball: #FFFDf7;
+            --hint-yellow: #FCF1CC;
+            --pure-white: #FFF;
+        }
+
+        body {
+            background: #f4f7fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            width: 450px;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        input {
+            margin: 10px 0;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        button {
+            background: var(--gold-finger);
+            color: var(--pure-white);
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        button:hover {
+            background: var(--lead)
+        }
+
+        p {
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        a {
+            color: gold;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: rgb(239, 213, 62);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Create an Account</h2>
+
+        <form id="signup-form">
+            <input type="text" id="name" placeholder="Full Name" required>
+            <input type="email" id="email" placeholder="Email Address" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button type="submit" id="sign-up-btn">Sign Up</button>
+        </form>
+
+        <p>Already have an account? <a href="Sign-in.html">Sign In</a></p>
+    </div>
+
+    <!-- Firebase Libraries -->
+    <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-auth-compat.js"></script>
+
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCp-rfSM07if-eT7bV_OO46Sgle0kOjqyU",
+            authDomain: "foodd-4b388.firebaseapp.com",
+            projectId: "foodd-4b388",
+            storageBucket: "foodd-4b388.firebasestorage.app",
+            messagingSenderId: "756490155399",
+            appId: "1:756490155399:web:e3f8023a0834e475668f22",
+            measurementId: "G-ZZC1NBES7C"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        const signupForm = document.getElementById('signup-form');
+
+        signupForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const name = document.getElementById('name').value;
+
+            auth.createUserWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    return user.updateProfile({
+                        displayName: name
+                    });
+                })
+                .then(() => {
+                    alert("Sign-up successful!");
+                    window.location.href = "index.html"; // redirect to homepage
+                })
+                .catch((error) => {
+                    alert(error.message);
+                });
+        });
+    </script>
+
+</body>
+</html>

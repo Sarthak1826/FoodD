@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Order Status - FoodD</title>
+<link rel="stylesheet" href="order-status.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+</head>
+
+<style>
+body {
+    background: linear-gradient(135deg,var(--gold-finger), var(--hint-yellow), var(--eye-ball),var(--gold-finger));
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-image: url("Imagess/Deliverybg.png"); /* change path */
+    background-size: cover;       /* make image cover full screen */
+    background-position: center;  /* center the image */
+    background-repeat: no-repeat; /* prevent tiling */
+    min-height: 100vh;            /* ensure full viewport */
+    color: white; 
+      background-repeat: no-repeat;
+  image-rendering: crisp-edges; 
+}
+@media (max-width: 768px) {
+  body {
+    background-image: url("https://img.freepik.com/premium-vector/online-delivery-service-conceptperfect-landing-page-delivery-website-banner-background_107661-98.jpg"); /* lighter image */
+  }
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4); /* dark overlay */
+  z-index: -1;
+}
+.status-container {
+    width: 90%;
+    max-width: 900px;
+    text-align: center;
+    backdrop-filter: blur(15px);
+    background: rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+}
+
+.order-tracker {
+    display: flex;
+    justify-content: space-between;
+    margin: 30px 0;
+}
+
+.step {
+    flex: 1;
+    position: relative;
+    text-align: center;
+    transition: all 0.5s ease;
+}
+
+.step::after {
+    content: '';
+    position: absolute;
+    top: 20px;
+    right: -50%;
+    height: 4px;
+    width: 100%;
+    background: rgba(255,255,255,0.3);
+    z-index: -1;
+}
+
+.step:last-child::after {
+    display: none;
+}
+
+.step i {
+    font-size: 40px;
+    margin-bottom: 10px;
+    color: rgba(255,255,255,0.6);
+}
+
+.step.active i {
+    color: #ffeb3b;
+    transform: scale(1.3);
+}
+
+.map-container img {
+    width: 150px;
+    margin: 20px auto;
+    animation: scoot 2s infinite alternate;
+}
+
+@keyframes scoot {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(30px); }
+}
+
+.order-details {
+    text-align: left;
+    margin-top: 20px;
+}
+
+.order-details ul {
+    list-style: none;
+}
+
+.order-details li {
+    padding: 5px 0;
+}
+
+.order-tracker {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    margin: 30px 0;
+}
+
+.progress-line {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    height: 4px;
+    background: black;
+    width: 0%;
+    z-index: -1;
+    transition: width 30s linear;
+    border-radius: 2px;
+}
+
+</style>
+<body>
+    <div class="status-container">
+        <h1>Your Order is on the Way!</h1>
+<div class="order-tracker">
+    <div class="progress-line"></div>  <!-- progress animation -->
+    <div class="step preparing active">
+        <i class="fas fa-hamburger"></i>
+        <p>Preparing Food</p>
+    </div>
+    <div class="step picked">
+        <i class="fas fa-motorcycle"></i>
+        <p>Picked by Delivery</p>
+    </div>
+    <div class="step out">
+        <i class="fas fa-route"></i>
+        <p>Out for Delivery</p>
+    </div>
+    <div class="step delivered">
+        <i class="fas fa-check-circle"></i>
+        <p>Delivered</p>
+    </div>
+</div>
+
+
+        <div class="map-container">
+            <img src="Imagess/DeliveryBoy.png" alt="Delivery">
+        </div>
+
+        <div class="order-details">
+            <h3>Order Details:</h3>
+            <ul id="order-list"></ul>
+        </div>
+    </div>
+
+<script src="order-status.js"></script>
+</body>
+</html>
